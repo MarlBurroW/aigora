@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import { AxisInsights } from "@/components/axis-insights";
 import { CreatorOrbit } from "@/components/creator-orbit";
 import { GradientBlob } from "@/components/gradient-blob";
@@ -59,6 +61,45 @@ export default async function HomePage() {
             <CreatorOrbit />
           </div>
         </div>
+      </section>
+
+      {/* Killer CTA — take the test, find your closest match */}
+      <section className="mt-6">
+        <Link
+          href="/take-test"
+          className="group block relative overflow-hidden rounded-2xl glass p-6 transition hover:bg-white/[0.06]"
+          style={{
+            boxShadow:
+              "inset 0 0 100px -40px color-mix(in srgb, var(--brand-blue) 60%, transparent)",
+          }}
+        >
+          <div className="relative flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div
+                className="grid size-12 place-items-center rounded-xl shrink-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--brand-blue), var(--brand-green))",
+                  boxShadow: "0 0 30px color-mix(in srgb, var(--brand-blue) 50%, transparent)",
+                }}
+              >
+                <Sparkles size={20} className="text-white" />
+              </div>
+              <div>
+                <div className="text-lg font-semibold tracking-tight">
+                  Where do <span className="text-gradient">you</span> stand?
+                </div>
+                <div className="text-sm text-foreground/60">
+                  Take the same 117 questions. See which LLM you&apos;re
+                  closest to.
+                </div>
+              </div>
+            </div>
+            <div className="text-sm font-medium text-foreground/70 transition group-hover:translate-x-1 group-hover:text-foreground">
+              Take the test →
+            </div>
+          </div>
+        </Link>
       </section>
 
       {cards.length >= 2 && (

@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { AnswerList } from "@/components/answer-list";
 import { GradientBlob } from "@/components/gradient-blob";
 import { CreatorIcon } from "@/components/creator-icon";
+import { AddToCompareButton } from "@/components/add-to-compare-button";
+import { EmbedButton } from "@/components/embed-button";
 import { LeftRightScale } from "@/components/left-right-scale";
 import { PoliticalRadar } from "@/components/political-radar";
 import { QualityWarning } from "@/components/quality-warning";
@@ -98,16 +100,23 @@ export default async function ModelPage({
               </p>
             </div>
           </div>
-          {refusals.length > 0 && (
-            <div className="flex flex-col items-end gap-2 text-right">
+          <div className="flex flex-col items-end gap-2 text-right">
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              <AddToCompareButton
+                provider={provider}
+                modelId={decodedModelId}
+              />
+              <EmbedButton provider={provider} modelId={decodedModelId} />
+            </div>
+            {refusals.length > 0 && (
               <Badge
                 variant="secondary"
                 className="bg-amber-500/10 text-amber-200"
               >
                 {refusals.length} refusal{refusals.length > 1 ? "s" : ""}
               </Badge>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 
@@ -140,6 +149,7 @@ export default async function ModelPage({
                 },
               ]}
               height={460}
+              axisColoredDots
             />
           </div>
         </Card>

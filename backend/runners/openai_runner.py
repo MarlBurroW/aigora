@@ -92,6 +92,19 @@ class OpenAIRunner(BaseRunner):
             )
 
         finished = now_iso()
+        # Some OpenAI-compatible gateways (notably some OpenRouter-routed
+        # models) return a response with no choices array — treat as a
+        # silent refusal rather than crashing the whole job.
+        if not resp.choices:
+            return RunResult(
+                provider=self.provider,
+                model_id=model_id,
+                started_at=started,
+                finished_at=finished,
+                answers={},
+                finish_reason=None,
+                error="provider returned no choices in response",
+            )
         choice = resp.choices[0]
         usage = {
             "prompt_tokens": resp.usage.prompt_tokens if resp.usage else 0,

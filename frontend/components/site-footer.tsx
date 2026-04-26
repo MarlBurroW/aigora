@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { SITE } from "@/lib/site";
@@ -44,6 +47,8 @@ const RESOURCES = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/embed/")) return null;
   const year = new Date().getUTCFullYear();
   return (
     <footer className="mt-20 border-t border-white/5 bg-background/40">
