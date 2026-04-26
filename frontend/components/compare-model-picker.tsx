@@ -5,7 +5,12 @@ import { X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CreatorIcon } from "@/components/creator-icon";
 import { SearchableInput } from "@/components/searchable-input";
-import { CREATOR_LABEL, getCreator, shortModelName } from "@/lib/creator";
+import {
+  CREATOR_LABEL,
+  getCreator,
+  shortModelName,
+  type Creator,
+} from "@/lib/creator";
 import { formatDateISO, formatDateShort } from "@/lib/format";
 import type { ModelSummary, Provider } from "@/lib/types";
 
@@ -18,23 +23,8 @@ type Props = {
   modelColors: Record<string, string>;
 };
 
-const PROVIDER_TABS: Array<Provider | "all"> = [
-  "all",
-  "openai",
-  "anthropic",
-  "gemini",
-  "xai",
-  "openrouter",
-];
-
-const TAB_LABEL: Record<string, string> = {
-  all: "All",
-  openai: "OpenAI",
-  anthropic: "Anthropic",
-  gemini: "Google",
-  xai: "xAI",
-  openrouter: "OpenRouter",
-};
+const TOP_CREATORS_COUNT = 10;
+type CreatorFilter = Creator | "all" | "other";
 
 export function CompareModelPicker({
   allSummaries,
@@ -42,7 +32,7 @@ export function CompareModelPicker({
   modelColors,
 }: Props) {
   const [q, setQ] = useState("");
-  const [providerFilter, setProviderFilter] = useState<Provider | "all">("all");
+  const [creatorFilter, setCreatorFilter] = useState<CreatorFilter>("all");
 
   const isActive = (s: ModelSummary) =>
     pairs.some((p) => p.provider === s.provider && p.modelId === s.modelId);
@@ -65,24 +55,38 @@ export function CompareModelPicker({
     const needle = q.trim().toLowerCase();
     return allSummaries.filter((s) => {
       if (isActive(s)) return false;
-      if (providerFilter !== "all" && s.provider !== providerFilter)
-        return false;
+      const creator = getCreator(s.provider as Provider, s.modelId);
+      if (creatorFilter !== "all") {
+        if (creatorFilter === "other") {
+          if (topCreators.includes(creator)) return false;
+        } else if (creator !== creatorFilter) {
+          return false;
+        }
+      }
       if (needle) {
-        const creator = getCreator(s.provider as Provider, s.modelId);
         const haystack =
-          `${CREATOR_LABEL[creator]} ${s.modelId}`.toLowerCase();
+          `${CREATOR_LABEL[creator]} ${shortModelName(s.provider as Provider, s.modelId)}`.toLowerCase();
         if (!haystack.includes(needle)) return false;
       }
       return true;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allSummaries, pairs, providerFilter, q]);
+  }, [allSummaries, pairs, creatorFilter, q]);
 
-  // Provider tabs are only rendered if the cluster actually has models for
-  // that provider — keeps the UI clean even if e.g. OpenRouter is disabled.
-  const availableProviders = useMemo(() => {
-    const set = new Set(allSummaries.map((s) => s.provider));
-    return PROVIDER_TABS.filter((p) => p === "all" || set.has(p));
+  // Creator tabs derived from the dataset — top N by model count, plus an
+  // "Other" bucket for the long tail. OpenRouter as a filter tab is
+  // intentionally absent: every model is filterable by its real creator.
+  const { topCreators, hasOther } = useMemo(() => {
+    const counts = new Map<Creator, number>();
+    for (const s of allSummaries) {
+      const c = getCreator(s.provider as Provider, s.modelId);
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+    const sorted = Array.from(counts.entries()).sort(
+      (a, b) => b[1] - a[1] || a[0].localeCompare(b[0]),
+    );
+    const top = sorted.slice(0, TOP_CREATORS_COUNT).map(([c]) => c);
+    return { topCreators: top, hasOther: sorted.length > TOP_CREATORS_COUNT };
   }, [allSummaries]);
 
   const hrefForToggle = (s: ModelSummary) => {
@@ -165,23 +169,26 @@ export function CompareModelPicker({
           className="w-full max-w-xs"
         />
         <div className="flex flex-wrap gap-1.5">
-          {availableProviders.map((p) => {
-            const active = providerFilter === p;
-            return (
-              <button
-                key={p}
-                type="button"
-                onClick={() => setProviderFilter(p)}
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
-                  active
-                    ? "bg-white/15 text-foreground"
-                    : "text-foreground/55 hover:bg-white/5 hover:text-foreground/85"
-                }`}
-              >
-                {TAB_LABEL[p]}
-              </button>
-            );
-          })}
+          <CreatorTab
+            active={creatorFilter === "all"}
+            onClick={() => setCreatorFilter("all")}
+            label="All"
+          />
+          {topCreators.map((c) => (
+            <CreatorTab
+              key={c}
+              active={creatorFilter === c}
+              onClick={() => setCreatorFilter(c)}
+              label={CREATOR_LABEL[c]}
+            />
+          ))}
+          {hasOther && (
+            <CreatorTab
+              active={creatorFilter === "other"}
+              onClick={() => setCreatorFilter("other")}
+              label="Other"
+            />
+          )}
         </div>
       </div>
 
@@ -192,7 +199,7 @@ export function CompareModelPicker({
         </div>
         {unselected.length === 0 ? (
           <p className="rounded-lg border border-white/5 bg-white/[0.02] py-6 text-center text-sm text-foreground/45">
-            {q || providerFilter !== "all"
+            {q || creatorFilter !== "all"
               ? "No model matches the filter."
               : "All models already selected."}
           </p>
@@ -230,5 +237,29 @@ export function CompareModelPicker({
         )}
       </div>
     </div>
+  );
+}
+
+function CreatorTab({
+  active,
+  onClick,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
+        active
+          ? "bg-white/15 text-foreground"
+          : "text-foreground/55 hover:bg-white/5 hover:text-foreground/85"
+      }`}
+    >
+      {label}
+    </button>
   );
 }

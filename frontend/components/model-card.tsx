@@ -51,6 +51,11 @@ export function ModelCard({ summary, scores, quality }: Props) {
               <div className="font-medium tracking-tight truncate">
                 {displayName}
               </div>
+              {summary.provider === "openrouter" && (
+                <div className="text-[10px] italic text-foreground/35">
+                  via OpenRouter
+                </div>
+              )}
             </div>
           </div>
           <div className="flex flex-col items-end gap-1 text-right text-xs text-foreground/50">

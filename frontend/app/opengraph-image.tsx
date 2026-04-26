@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { OGBrandMark } from "./_og-brand-mark";
 import { listModelSummaries } from "@/lib/queries";
 import { SITE } from "@/lib/site";
 
@@ -66,23 +67,15 @@ export default async function HomeOpenGraphImage() {
           }}
         />
 
-        {/* Top: wordmark */}
+        {/* Top: wordmark with the brand compass */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "22px",
+            gap: "20px",
           }}
         >
-          <div
-            style={{
-              width: "64px",
-              height: "64px",
-              borderRadius: "18px",
-              background: `linear-gradient(135deg, ${BRAND_BLUE}, ${BRAND_GREEN})`,
-              boxShadow: `0 0 60px ${BRAND_BLUE}88`,
-            }}
-          />
+          <OGBrandMark size={68} />
           <div
             style={{
               fontSize: "56px",

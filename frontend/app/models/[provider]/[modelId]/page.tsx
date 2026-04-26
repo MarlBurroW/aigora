@@ -89,6 +89,12 @@ export default async function ModelPage({
                 <code className="font-mono text-xs">
                   {run.finishReason ?? "—"}
                 </code>
+                {provider === "openrouter" && (
+                  <>
+                    {" "}
+                    · <span className="italic">via OpenRouter</span>
+                  </>
+                )}
               </p>
             </div>
           </div>

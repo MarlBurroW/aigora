@@ -4,7 +4,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { ModelCard } from "@/components/model-card";
 import { SearchableInput } from "@/components/searchable-input";
-import { PROVIDER_LABEL } from "@/lib/format";
+import {
+  CREATOR_LABEL,
+  getCreator,
+  shortModelName,
+  type Creator,
+} from "@/lib/creator";
 import type {
   AxisScore,
   ModelSummary,
@@ -24,59 +29,65 @@ type Props = {
 };
 
 const PAGE_SIZE = 24;
+/** How many creator tabs to show (the rest fold into "Other"). */
+const TOP_CREATORS_COUNT = 10;
 
 type SortMode = "default" | "lr-asc" | "lr-desc" | "date-desc";
 
 const SORT_LABEL: Record<SortMode, string> = {
-  default: "Provider / name",
+  default: "Creator / name",
   "lr-asc": "Left → Right",
   "lr-desc": "Right → Left",
   "date-desc": "Most recent first",
 };
 
-const PROVIDER_TABS: Array<Provider | "all"> = [
-  "all",
-  "openai",
-  "anthropic",
-  "gemini",
-  "xai",
-  "openrouter",
-];
-
-const TAB_LABEL: Record<string, string> = {
-  all: "All",
-  openai: "OpenAI",
-  anthropic: "Anthropic",
-  gemini: "Google",
-  xai: "xAI",
-  openrouter: "OpenRouter",
-};
+type CreatorFilter = Creator | "all" | "other";
 
 export function HomeModelGrid({ items }: Props) {
   const [q, setQ] = useState("");
-  const [providerFilter, setProviderFilter] = useState<Provider | "all">("all");
+  const [creatorFilter, setCreatorFilter] = useState<CreatorFilter>("all");
   const [sortMode, setSortMode] = useState<SortMode>("default");
   // Low-quality models pollute the visual signal — hide them by default
   // (toggle in the toolbar lets users opt them back in).
   const [hideLowQuality, setHideLowQuality] = useState(true);
   const [page, setPage] = useState(1);
 
-  // Provider tabs only show if the data has at least one model from that
-  // provider — keeps the UI clean when e.g. OpenRouter isn't enabled yet.
-  const availableProviders = useMemo(() => {
-    const set = new Set(items.map((i) => i.summary.provider));
-    return PROVIDER_TABS.filter((p) => p === "all" || set.has(p));
+  // Tabs are creator-based (not provider-based). OpenRouter is hidden as
+  // a tab — every model surfaces under its actual creator (Mistral, Meta,
+  // DeepSeek, …) regardless of which gateway was used to test it.
+  const { topCreators, hasOther } = useMemo(() => {
+    const counts = new Map<Creator, number>();
+    for (const item of items) {
+      const c = getCreator(
+        item.summary.provider as Provider,
+        item.summary.modelId,
+      );
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+    const sorted = Array.from(counts.entries()).sort(
+      (a, b) => b[1] - a[1] || a[0].localeCompare(b[0]),
+    );
+    const top = sorted.slice(0, TOP_CREATORS_COUNT).map(([c]) => c);
+    return { topCreators: top, hasOther: sorted.length > TOP_CREATORS_COUNT };
   }, [items]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = items.filter(({ summary, quality }) => {
-      if (providerFilter !== "all" && summary.provider !== providerFilter)
-        return false;
+      const creator = getCreator(
+        summary.provider as Provider,
+        summary.modelId,
+      );
+      if (creatorFilter !== "all") {
+        if (creatorFilter === "other") {
+          if (topCreators.includes(creator)) return false;
+        } else if (creator !== creatorFilter) {
+          return false;
+        }
+      }
       if (hideLowQuality && quality.flag !== "ok") return false;
       if (needle) {
-        const provider = summary.provider as Provider;
-        const haystack = `${PROVIDER_LABEL[provider] ?? summary.provider} ${summary.modelId}`.toLowerCase();
+        const haystack = `${CREATOR_LABEL[creator]} ${shortModelName(summary.provider as Provider, summary.modelId)}`.toLowerCase();
         if (!haystack.includes(needle)) return false;
       }
       return true;
@@ -99,12 +110,12 @@ export function HomeModelGrid({ items }: Props) {
       // default: keep server-side order
     }
     return out;
-  }, [items, q, providerFilter, hideLowQuality, sortMode]);
+  }, [items, q, creatorFilter, topCreators, hideLowQuality, sortMode]);
 
   // Reset to page 1 whenever the active filter changes the result set
   useEffect(() => {
     setPage(1);
-  }, [q, providerFilter, hideLowQuality, sortMode]);
+  }, [q, creatorFilter, hideLowQuality, sortMode]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -132,23 +143,26 @@ export function HomeModelGrid({ items }: Props) {
 
       <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
         <div className="flex flex-wrap gap-1">
-          {availableProviders.map((p) => {
-            const active = providerFilter === p;
-            return (
-              <button
-                key={p}
-                type="button"
-                onClick={() => setProviderFilter(p)}
-                className={`rounded-md px-2.5 py-1 font-medium transition ${
-                  active
-                    ? "bg-white/15 text-foreground"
-                    : "text-foreground/55 hover:bg-white/5 hover:text-foreground/85"
-                }`}
-              >
-                {TAB_LABEL[p]}
-              </button>
-            );
-          })}
+          <CreatorTab
+            active={creatorFilter === "all"}
+            onClick={() => setCreatorFilter("all")}
+            label="All"
+          />
+          {topCreators.map((c) => (
+            <CreatorTab
+              key={c}
+              active={creatorFilter === c}
+              onClick={() => setCreatorFilter(c)}
+              label={CREATOR_LABEL[c]}
+            />
+          ))}
+          {hasOther && (
+            <CreatorTab
+              active={creatorFilter === "other"}
+              onClick={() => setCreatorFilter("other")}
+              label="Other"
+            />
+          )}
         </div>
 
         <div className="ml-auto flex items-center gap-3">
@@ -285,5 +299,29 @@ function Pagination({
         <ChevronRight size={14} />
       </button>
     </nav>
+  );
+}
+
+function CreatorTab({
+  active,
+  onClick,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-md px-2.5 py-1 font-medium transition ${
+        active
+          ? "bg-white/15 text-foreground"
+          : "text-foreground/55 hover:bg-white/5 hover:text-foreground/85"
+      }`}
+    >
+      {label}
+    </button>
   );
 }

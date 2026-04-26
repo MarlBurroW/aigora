@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { OGBrandMark } from "../../../_og-brand-mark";
 import { CREATOR_LABEL, getCreator, shortModelName } from "@/lib/creator";
 import {
   assessAnswerQuality,
@@ -302,18 +303,10 @@ function Wordmark() {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "16px",
+        gap: "14px",
       }}
     >
-      <div
-        style={{
-          width: "44px",
-          height: "44px",
-          borderRadius: "12px",
-          background: `linear-gradient(135deg, ${BRAND_BLUE}, ${BRAND_GREEN})`,
-          boxShadow: `0 0 30px ${BRAND_BLUE}88`,
-        }}
-      />
+      <OGBrandMark size={48} />
       <div
         style={{
           fontSize: "36px",

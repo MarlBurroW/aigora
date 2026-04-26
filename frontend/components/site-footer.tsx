@@ -87,15 +87,7 @@ export function SiteFooter() {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-6 text-xs text-foreground/40 sm:flex-row">
           <p>
-            © {year} {SITE.name} · Built in a weekend with{" "}
-            <a
-              href="https://www.anthropic.com/claude-code"
-              target="_blank"
-              rel="noreferrer"
-              className="underline underline-offset-2 hover:text-foreground/70"
-            >
-              Claude Code
-            </a>
+            © {year} {SITE.name}
           </p>
           <p className="text-center sm:text-right">
             Quiz courtesy of{" "}
