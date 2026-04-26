@@ -107,6 +107,7 @@ export function getCreator(provider: Provider, modelId: string): Creator {
   if (provider === "openai") return "openai";
   if (provider === "anthropic") return "anthropic";
   if (provider === "gemini") return "google";
+  if (provider === "xai") return "xai";
   if (provider === "openrouter") {
     const prefix = modelId.split("/", 1)[0]?.toLowerCase() ?? "";
     return PREFIX_TO_CREATOR[prefix] ?? "openrouter";

@@ -6,10 +6,13 @@ import type { Provider } from "@/lib/types";
 // erase the type here. Calls to `Icon(...)` and `Icon.Avatar(...)` work fine
 // because every icon in the map exposes both.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+import { XAI } from "@lobehub/icons";
+
 const ICONS: Record<Provider, any> = {
   openai: OpenAI,
   anthropic: Anthropic,
   gemini: Gemini,
+  xai: XAI,
   openrouter: OpenRouter,
 };
 

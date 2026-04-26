@@ -23,6 +23,7 @@ const PROVIDER_TABS: Array<Provider | "all"> = [
   "openai",
   "anthropic",
   "gemini",
+  "xai",
   "openrouter",
 ];
 
@@ -31,6 +32,7 @@ const TAB_LABEL: Record<string, string> = {
   openai: "OpenAI",
   anthropic: "Anthropic",
   gemini: "Google",
+  xai: "xAI",
   openrouter: "OpenRouter",
 };
 

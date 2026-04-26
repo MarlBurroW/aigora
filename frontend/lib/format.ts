@@ -4,6 +4,7 @@ export const PROVIDER_LABEL: Record<Provider, string> = {
   openai: "OpenAI",
   anthropic: "Anthropic",
   gemini: "Google",
+  xai: "xAI",
   openrouter: "OpenRouter",
 };
 

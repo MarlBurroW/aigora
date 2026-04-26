@@ -58,6 +58,9 @@ SECRET_ARGS=(
   --from-literal=ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY}"
   --from-literal=GOOGLE_API_KEY="${GOOGLE_API_KEY}"
 )
+if [[ -n "${XAI_API_KEY:-}" ]]; then
+  SECRET_ARGS+=( --from-literal=XAI_API_KEY="${XAI_API_KEY}" )
+fi
 if [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
   SECRET_ARGS+=( --from-literal=OPENROUTER_API_KEY="${OPENROUTER_API_KEY}" )
 fi

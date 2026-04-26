@@ -1,4 +1,9 @@
-export type Provider = "openai" | "anthropic" | "gemini" | "openrouter";
+export type Provider =
+  | "openai"
+  | "anthropic"
+  | "gemini"
+  | "xai"
+  | "openrouter";
 
 export type AnswerLabel =
   | "strongly_agree"

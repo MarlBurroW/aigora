@@ -32,10 +32,15 @@ spec:
                   echo "=== OpenAI ===" && python run_test.py --provider openai
                   echo "=== Anthropic ===" && python run_test.py --provider anthropic
                   echo "=== Gemini ===" && python run_test.py --provider gemini
+                  if [ -n "${XAI_API_KEY:-}" ]; then
+                    echo "=== xAI ===" && python run_test.py --provider xai
+                  else
+                    echo "=== xAI === (skipped — no XAI_API_KEY)"
+                  fi
                   if [ -n "${OPENROUTER_API_KEY:-}" ]; then
                     echo "=== OpenRouter ===" && python run_test.py --provider openrouter
                   else
-                    echo "=== OpenRouter === (skipped — no OPENROUTER_API_KEY in aigora-providers secret)"
+                    echo "=== OpenRouter === (skipped — no OPENROUTER_API_KEY)"
                   fi
                   exit 0
               envFrom:

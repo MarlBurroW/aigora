@@ -23,6 +23,7 @@ from runners import (
     GeminiRunner,
     OpenAIRunner,
     OpenRouterRunner,
+    XAIRunner,
 )
 from runners.base import BaseRunner, RunResult
 
@@ -32,6 +33,7 @@ PROVIDERS: dict[str, type[BaseRunner]] = {
     "openai": OpenAIRunner,
     "anthropic": AnthropicRunner,
     "gemini": GeminiRunner,
+    "xai": XAIRunner,
     "openrouter": OpenRouterRunner,
 }
 
