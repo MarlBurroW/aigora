@@ -2,6 +2,7 @@
 
 import { Check, Code2, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 
 type Props = {
   provider: string;
@@ -41,6 +42,7 @@ export function EmbedButton({ provider, modelId }: Props) {
     try {
       await navigator.clipboard.writeText(snippet);
       setCopied(true);
+      track("Embed copied", { model: `${provider}/${modelId}` });
       setTimeout(() => setCopied(false), 1800);
     } catch {
       /* clipboard blocked */

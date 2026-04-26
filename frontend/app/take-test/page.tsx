@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { GradientBlob } from "@/components/gradient-blob";
+import { track } from "@/lib/analytics";
 import { dataset } from "@/lib/politiscales";
 import { encodeAnswers, type AnswerLabel } from "@/lib/scoring-client";
 
@@ -117,7 +118,12 @@ export default function TakeTestPage() {
   const choose = useCallback(
     (label: AnswerLabel) => {
       setState((s) => {
+        const wasEmpty = Object.keys(s.answers).length === 0;
         const newAnswers = { ...s.answers, [question.id]: label };
+        if (wasEmpty) {
+          // Fired exactly once per quiz session — first answer = real start
+          track("Quiz started");
+        }
         // If this was the last question, submit immediately
         if (s.cursor >= total - 1) {
           submit(newAnswers);

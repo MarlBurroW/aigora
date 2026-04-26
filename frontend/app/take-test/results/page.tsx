@@ -8,6 +8,7 @@ import { LeftRightScale } from "@/components/left-right-scale";
 import { PoliticalCompassMini } from "@/components/political-compass-mini";
 import { PoliticalRadar } from "@/components/political-radar";
 import { ScoreBar } from "@/components/score-bar";
+import { TrackQuizCompletion } from "@/components/track-quiz-completion";
 import {
   CREATOR_LABEL,
   getCreator,
@@ -126,6 +127,13 @@ export default async function ResultsPage({
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
+      {closest && (
+        <TrackQuizCompletion
+          match={`${closest.provider}/${closest.modelId}`}
+          verdict={userDesc.label}
+          similarity={closest.similarity}
+        />
+      )}
       {/* Hero */}
       <section className="relative overflow-hidden rounded-3xl glass p-10">
         <GradientBlob intensity={0.5} />
