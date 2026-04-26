@@ -1,0 +1,56 @@
+# Daily discovery + test of any new model that appeared on each provider.
+# Runs the Python orchestrator three times in sequence (one per provider).
+# `seen_models` dedup is now in Postgres → no extra state to mount.
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: aigora-backend
+  namespace: aigora
+spec:
+  schedule: "0 3 * * *" # 03:00 UTC daily
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+            - name: ghcr-secret
+          containers:
+            - name: runner
+              image: ghcr.io/marlburrow/aigora-backend:latest
+              imagePullPolicy: Always
+              command: ["sh", "-c"]
+              args:
+                - |
+                  set +e
+                  echo "=== OpenAI ===" && python run_test.py --provider openai
+                  echo "=== Anthropic ===" && python run_test.py --provider anthropic
+                  echo "=== Gemini ===" && python run_test.py --provider gemini
+                  if [ -n "${OPENROUTER_API_KEY:-}" ]; then
+                    echo "=== OpenRouter ===" && python run_test.py --provider openrouter
+                  else
+                    echo "=== OpenRouter === (skipped — no OPENROUTER_API_KEY in aigora-providers secret)"
+                  fi
+                  exit 0
+              envFrom:
+                - secretRef:
+                    name: aigora-providers
+              env:
+                - name: DATABASE_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: aigora-postgres
+                      key: DATABASE_URL
+              resources:
+                requests:
+                  cpu: "100m"
+                  memory: "256Mi"
+                limits:
+                  cpu: "1000m"
+                  memory: "512Mi"

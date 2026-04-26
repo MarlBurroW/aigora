@@ -1,0 +1,93 @@
+# Postgres 17 as a single-replica StatefulSet on Longhorn-backed storage.
+# The schema is auto-applied on first boot via initdb scripts mounted from a
+# ConfigMap (kept in sync by `bootstrap-secrets.sh`).
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aigora-postgres
+  namespace: aigora
+  labels:
+    app: aigora-postgres
+spec:
+  clusterIP: None # headless — required by StatefulSet
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: aigora-postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: aigora-postgres
+  namespace: aigora
+spec:
+  serviceName: aigora-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aigora-postgres
+  template:
+    metadata:
+      labels:
+        app: aigora-postgres
+    spec:
+      securityContext:
+        fsGroup: 999 # postgres uid in the upstream image
+      containers:
+        - name: postgres
+          image: postgres:17-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+              name: postgres
+          env:
+            - name: POSTGRES_USER
+              value: aigora
+            - name: POSTGRES_DB
+              value: aigora
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: aigora-postgres
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: schema
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "aigora", "-d", "aigora"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "aigora", "-d", "aigora"]
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+      volumes:
+        - name: schema
+          configMap:
+            name: aigora-postgres-schema
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: longhorn
+        resources:
+          requests:
+            storage: 5Gi

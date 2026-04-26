@@ -1,0 +1,2076 @@
+{
+  "meta": {
+    "source": "https://github.com/Conobi/politiscales",
+    "answer_scale": {
+      "strongly_agree": 1,
+      "agree": 0.6666666666666666,
+      "neutral": 0,
+      "disagree": -0.6666666666666666,
+      "strongly_disagree": -1
+    }
+  },
+  "axes": {
+    "paired": {
+      "constructivism": {
+        "pair": "identity",
+        "legacyKey": "c0",
+        "color": "#a425b6"
+      },
+      "essentialism": {
+        "pair": "identity",
+        "legacyKey": "c1",
+        "color": "#34b634"
+      },
+      "rehabilitative_justice": {
+        "pair": "justice",
+        "legacyKey": "j0",
+        "color": "#14bee1"
+      },
+      "punitive_justice": {
+        "pair": "justice",
+        "legacyKey": "j1",
+        "color": "#e6cc27"
+      },
+      "progressive": {
+        "pair": "culture",
+        "legacyKey": "s0",
+        "color": "#850083"
+      },
+      "conservative": {
+        "pair": "culture",
+        "legacyKey": "s1",
+        "color": "#970000"
+      },
+      "internationalism": {
+        "pair": "globalism",
+        "legacyKey": "b0",
+        "color": "#3e6ffd"
+      },
+      "nationalism": {
+        "pair": "globalism",
+        "legacyKey": "b1",
+        "color": "#ff8500"
+      },
+      "communism": {
+        "pair": "economy",
+        "legacyKey": "p0",
+        "color": "#cc0000"
+      },
+      "capitalism": {
+        "pair": "economy",
+        "legacyKey": "p1",
+        "color": "#ffb800"
+      },
+      "regulation": {
+        "pair": "markets",
+        "legacyKey": "m0",
+        "color": "#269B32"
+      },
+      "laissez_faire": {
+        "pair": "markets",
+        "legacyKey": "m1",
+        "color": "#6608C0"
+      },
+      "ecology": {
+        "pair": "environment",
+        "legacyKey": "e0",
+        "color": "#a0e90d"
+      },
+      "production": {
+        "pair": "environment",
+        "legacyKey": "e1",
+        "color": "#4deae9"
+      },
+      "revolution": {
+        "pair": "radicalism",
+        "legacyKey": "t0",
+        "color": "#eb1a66"
+      },
+      "reform": {
+        "pair": "radicalism",
+        "legacyKey": "t1",
+        "color": "#0ee4c8"
+      },
+      "materialism": {
+        "pair": "perspective",
+        "color": "#ff00ff"
+      },
+      "idealism": {
+        "pair": "perspective",
+        "color": "#00ffff"
+      },
+      "sustainability": {
+        "pair": "development",
+        "color": "#00ff00"
+      },
+      "growth_at_all_costs": {
+        "pair": "development",
+        "color": "#ff0000"
+      }
+    },
+    "unpaired": {
+      "anarchism": {
+        "legacyKey": "anar"
+      },
+      "pragmatism": {
+        "legacyKey": "prag"
+      },
+      "feminism": {
+        "legacyKey": "femi"
+      },
+      "complotism": {
+        "legacyKey": "comp"
+      },
+      "veganism": {
+        "legacyKey": "vega"
+      },
+      "monarchism": {
+        "legacyKey": "mona"
+      },
+      "religion": {
+        "legacyKey": "reli"
+      }
+    },
+    "pairs": [
+      {
+        "name": "identity",
+        "left": "constructivism",
+        "right": "essentialism"
+      },
+      {
+        "name": "justice",
+        "left": "rehabilitative_justice",
+        "right": "punitive_justice"
+      },
+      {
+        "name": "culture",
+        "left": "progressive",
+        "right": "conservative"
+      },
+      {
+        "name": "globalism",
+        "left": "internationalism",
+        "right": "nationalism"
+      },
+      {
+        "name": "economy",
+        "left": "communism",
+        "right": "capitalism"
+      },
+      {
+        "name": "markets",
+        "left": "regulation",
+        "right": "laissez_faire"
+      },
+      {
+        "name": "environment",
+        "left": "ecology",
+        "right": "production"
+      },
+      {
+        "name": "radicalism",
+        "left": "revolution",
+        "right": "reform"
+      },
+      {
+        "name": "perspective",
+        "left": "materialism",
+        "right": "idealism"
+      },
+      {
+        "name": "development",
+        "left": "sustainability",
+        "right": "growth_at_all_costs"
+      }
+    ],
+    "badge_thresholds": {
+      "anarchism": 0.9,
+      "pragmatism": 0.5,
+      "feminism": 0.9,
+      "complotism": 0.9,
+      "veganism": 0.5,
+      "religion": 0.5,
+      "monarchism": 0.5
+    }
+  },
+  "questions": [
+    {
+      "id": "constructivism_becoming_woman",
+      "text": "“One is not born, but rather becomes, a woman.”",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_racism_presence",
+      "text": "Differences in treatment and quality of life in our society show that racism is still omnipresent.",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_science_society",
+      "text": "All sciences, even chemistry and biology are not uncompromising and are conditioned by our society.",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_gender_categories",
+      "text": "The categories “women” and “men” are social constructs that should be given up.",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_criminality_nature",
+      "text": "Nobody is by nature predisposed to criminality.",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_sexual_orientation",
+      "text": "Sexual orientation is a social construct",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "constructivism_ethnic_differences",
+      "text": "Social differences between ethnic groups cannot be explained by biology.",
+      "weights_yes": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_gender_biology",
+      "text": "The social roles of women and men can partly be explained by biological differences.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_hormones_character",
+      "text": "Hormonal differences can explain some differences in individual characteristics between women and men.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_sexual_aggression",
+      "text": "Sexual assaults are partly caused by natural impulse.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_transgender_identity",
+      "text": "Transgender individuals will never really be of the gender they identify as.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_national_traits",
+      "text": "Members of a nation or culture have some unchangeable characteristics that define them.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_human_heterosexuality",
+      "text": "Biologically, human beings are meant for heterosexuality.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "essentialism_human_egoism",
+      "text": "Selfishness is the overriding drive in the human species, no matter the context.",
+      "weights_yes": [
+        {
+          "axis": "essentialism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "constructivism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_border_removal",
+      "text": "Borders should eventually be abolished.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_ideals_country",
+      "text": "People need to stand up for their ideals, even if it leads them to betray their country.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_country_reparation",
+      "text": "My country must pay for the damages caused by the crimes it committed in other countries.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_free_trade_similarity",
+      "text": "If two countries have similar economies, social systems and environmental norms, then the free market between them has no negative impact.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_sport_chauvinism",
+      "text": "National Chauvinism during sports competitions is not acceptable.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_global_concern",
+      "text": "I am equally concerned about the inhabitants of my country and those of other the countries.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "internationalism_foreign_political_rights",
+      "text": "Foreigners living in my country should be allowed to act politically, equally to those who have the nationality.",
+      "weights_yes": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_citizen_priority",
+      "text": "Citizens should take priority over foreigners.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_country_values",
+      "text": "The values of my country are superior to those of other countries.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_multiculturalism_danger",
+      "text": "Multiculturalism is a threat to our society.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_good_citizen_patriot",
+      "text": "A good citizen is a patriot.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_military_intervention",
+      "text": "It is legitimate for a country to intervene militarily to defend its economic interests.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_history_national_belonging",
+      "text": "It is necessary to teach history in order to create a sense of belonging to the nation.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "nationalism_country_research_access",
+      "text": "Research produced by my country should not be available to other countries.",
+      "weights_yes": [
+        {
+          "axis": "nationalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "internationalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_wealth_ownership",
+      "text": "No one should get rich from owning a business, housing, or land.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_private_labor_theft",
+      "text": "Wage labor is a form of theft from the worker by companies.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_public_health",
+      "text": "It is important that health should stay a public matter.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_public_energy_infrastructure",
+      "text": "Energy and transport structures should be a public matter.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_patents_nonexistence",
+      "text": "Patents should not exist.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_production_rationing",
+      "text": "It is necessary to implement assemblies to ration our production to the consumers according to their needs.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "communism_labor_market_exploitation",
+      "text": "The labor market enslaves workers.",
+      "weights_yes": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_profit_economy",
+      "text": "Looking for one's own profit is healthy for the economy.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_merit_wealth_difference",
+      "text": "It is merit that explains differences of wealth between two individuals.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_private_schools_universities",
+      "text": "The fact that some schools and universities are private is not a problem.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_relocation_production",
+      "text": "Offshoring and outsourcing are necessary evils to improve production.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_rich_poor_acceptance",
+      "text": "It is acceptable that there are rich and poor people.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_private_industry_sectors",
+      "text": "It is acceptable that some industry sectors are private.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "capitalism_private_banks",
+      "text": "Banks should remain private.",
+      "weights_yes": [
+        {
+          "axis": "capitalism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "communism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_income_tax_redistribution",
+      "text": "Revenues and capital should be taxed to redistribute wealth.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_retirement_age",
+      "text": "We should be retiring earlier.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_unjustified_dismissals",
+      "text": "Dismissals of employees should be forbidden except if it is justified.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_wage_control",
+      "text": "Minimal levels of salary should be ensured to make sure that a worker can live of their work.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_monopoly_prevention",
+      "text": "It is necessary to avoid private monopoly.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_public_loans",
+      "text": "Loans contracted by the public sector (states, regions, communities) do not necessarily have to be repaid.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "regulation_sector_subsidies",
+      "text": "Some sectors or type of employment should be financially supported.",
+      "weights_yes": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_market_optimality",
+      "text": "Market economy is optimal when it is not regulated.",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_contract_freedom",
+      "text": "Nowadays employees are free to choose when signing a contract with their future employer",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_labor_regulations",
+      "text": "It is necessary to remove regulations in labor legislation to encourage firms to hire.",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_working_hours",
+      "text": "The maximum allowed hours in the legal work week should be increased.",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_environmental_standards",
+      "text": "Environmental norms should be influenced by mass consumption and not from an authority.",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_social_assistance",
+      "text": "Social assistance deters people from working.",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire_public_enterprises",
+      "text": "State-run companies should be managed like private ones and follow the logic of the market (competition, profitability...).",
+      "weights_yes": [
+        {
+          "axis": "laissez_faire",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "regulation",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_tradition_questioning",
+      "text": "Traditions should be questioned.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_official_languages",
+      "text": "I do not have any problem if other official languages are added or replace the already existing official language in my country.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_marriage_abolition",
+      "text": "Marriage should be abolished.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_foreign_culture_enrichment",
+      "text": "Foreigners enrich our culture.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_religion_influence",
+      "text": "The influence of religion should decrease.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_language_definition",
+      "text": "A language is defined by its users, not by scholars.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "progressive_euthanasia_legalization",
+      "text": "Euthanasia should be authorized.",
+      "weights_yes": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_homosexual_equality",
+      "text": "Homosexuals should not be treated equally to heterosexuals in regards to marriage, parentage, adoption or procreation.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_death_penalty_justification",
+      "text": "In some specific conditions the death penalty is justified.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        },
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        },
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_technological_change",
+      "text": "Technological progress must not change society too quickly.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_school_curriculum",
+      "text": "School should mostly teach our values, traditions, and fundamental knowledge.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_abortion_restriction",
+      "text": "Abortion should be limited to specific cases.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        },
+        {
+          "axis": "feminism",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_couple_child_production",
+      "text": "The main goal of a couple is to make at least one child.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "conservative_abstinence_preference",
+      "text": "Abstinence should be preferred to contraception, to preserve the true nature of the sexual act.",
+      "weights_yes": [
+        {
+          "axis": "conservative",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "progressive",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_species_extinction",
+      "text": "It is not acceptable that human actions should lead to the extinction of species.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_gmo_restriction",
+      "text": "GMOs should be forbidden outside research and medical purposes.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_climate_change_combat",
+      "text": "We must fight against global warming.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_consumption_change",
+      "text": "We should accept changes in our way of consuming food to limit the exploitation of nature.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_biodiversity_agriculture",
+      "text": "It is important to encourage an agriculture that maintains a food biodiversity, even if the output is inferior.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_ecosystem_preservation",
+      "text": "Preserving non-urban ecosystems is more important than creating jobs.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "ecology_waste_reduction_production",
+      "text": "Reduction of waste should be done by reducing production.",
+      "weights_yes": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_space_colonization",
+      "text": "Space colonization is a good solution for supplying the lack of raw material on Earth (iron, rare metals, fuel...)",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_ecosystem_transformation",
+      "text": "Transforming ecosystems durably to increase the quality of life of human beings is legitimate.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_research_investment",
+      "text": "It is necessary to massively invest in research to improve productivity.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_transhumanism_benefit",
+      "text": "Transhumanism will be beneficial because it will allow us to improve our capacities.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_nuclear_energy",
+      "text": "Nuclear fission, when well maintained, is a good source of energy.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_fossil_energy_exploitation",
+      "text": "Exploitation of fossil fuels is necessary.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "production_economic_growth",
+      "text": "Maintaining strong economic growth should be an objective for the government.",
+      "weights_yes": [
+        {
+          "axis": "production",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "ecology",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_prison_abolition",
+      "text": "Prisons should no longer exist.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_minimum_penalty",
+      "text": "It is unfair to set a minimal penalty for an offense or a crime.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_reinsertion_support",
+      "text": "Individuals who get out of prison should be assisted in their reinsertion.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_contextual_penalties",
+      "text": "Justice should always take into consideration the context and the past of the condemned and adapt their penalty accordingly.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_detainee_conditions",
+      "text": "Conditions of life in jail should be greatly improved.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_data_profiling",
+      "text": "The filing and storage of personal records should be delimited strictly and database cross-checking should be forbidden.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "rehabilitative_justice_internet_anonymity",
+      "text": "The right to be anonymous on Internet should be guaranteed.",
+      "weights_yes": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_punishment_goal",
+      "text": "The purpose of the judiciary system should be to punish those who went against the law.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_police_armed",
+      "text": "The police should be armed.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_terrorism_protection",
+      "text": "The sacrifice of some civil liberties is a necessity in order to be protected from terrorist acts.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_order_authority",
+      "text": "Order and authority should be respected in all circumstances.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_heavy_penalties_efficacy",
+      "text": "Heavy penalties are efficient because they are dissuasive.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "punitive_justice_preventive_arrest",
+      "text": "It is better to arrest someone potentially dangerous preemptively rather than taking the risk of having them committing a crime.",
+      "weights_yes": [
+        {
+          "axis": "punitive_justice",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "rehabilitative_justice",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_general_strike_rights",
+      "text": "Mass strike is a good way to acquire new rights.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_armed_struggle_necessity",
+      "text": "Armed struggle in a country is sometimes necessary.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_insurrection_necessity",
+      "text": "Insurrection is necessary to deeply change society.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_political_institutions",
+      "text": "Activism in existing political organizations is not relevant to change society.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_election_challenge",
+      "text": "Elections organized by the state cannot question the powers in place.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_hacktivism_political",
+      "text": "Hacking has a legitimate place in political struggle.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "revolution_sabotage_legitimacy",
+      "text": "Sabotage is legitimate under certain conditions.",
+      "weights_yes": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_lawful_militation",
+      "text": "Activists must always act in strict accordance with the law.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_revolution_outcome",
+      "text": "Revolutions will always end up in a bad way.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_radical_change_impact",
+      "text": "Changing the system radically is counter-productive. We should rather transform it progressively.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_violence_solution",
+      "text": "Violence against individuals is never productive.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_manifestant_violence",
+      "text": "We should always distance ourselves from protesters who use violence.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_opposition_compromise",
+      "text": "We need to make compromises with the opposition to apply our ideas.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reform_individual_lifestyle_change",
+      "text": "Changes in an individual's way of life can induce changes in society.",
+      "weights_yes": [
+        {
+          "axis": "reform",
+          "value": 3
+        }
+      ],
+      "weights_no": [
+        {
+          "axis": "revolution",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "religion_diffusion",
+      "text": "My religion must be spread as widely as possible.",
+      "weights_yes": [
+        {
+          "axis": "religion",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    },
+    {
+      "id": "complotism_secret_control",
+      "text": "It is a small group that consciously and secretly controls the world.",
+      "weights_yes": [
+        {
+          "axis": "complotism",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    },
+    {
+      "id": "pragmatism_policy_approach",
+      "text": "A good policy is a pragmatic policy without ideology.",
+      "weights_yes": [
+        {
+          "axis": "pragmatism",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    },
+    {
+      "id": "monarchism_peace_sovereignty",
+      "text": "We need to establish a monarchy to federate the people and preserve our sovereignty.",
+      "weights_yes": [
+        {
+          "axis": "monarchism",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    },
+    {
+      "id": "veganism_animal_exploitation",
+      "text": "Humans should neither eat nor exploit animals.",
+      "weights_yes": [
+        {
+          "axis": "veganism",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    },
+    {
+      "id": "anarchism_state_abolition",
+      "text": "The state should be abolished.",
+      "weights_yes": [
+        {
+          "axis": "anarchism",
+          "value": 3
+        }
+      ],
+      "weights_no": []
+    }
+  ]
+}

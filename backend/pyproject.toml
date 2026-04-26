@@ -1,0 +1,29 @@
+[project]
+name = "politix-backend"
+version = "0.1.0"
+description = "Runs the Politiscales test against LLMs and produces scored results."
+requires-python = ">=3.11"
+dependencies = [
+    "openai>=1.60.0",
+    "anthropic>=0.40.0",
+    "google-genai>=0.3.0",
+    "python-dotenv>=1.0.1",
+    "psycopg[binary]>=3.2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["politiscales", "runners"]
+
+[tool.setuptools.package-data]
+politiscales = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

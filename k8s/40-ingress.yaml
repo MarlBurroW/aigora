@@ -1,0 +1,22 @@
+# Cloudflare proxies traffic and terminates TLS, so the origin only needs
+# plain HTTP. If you switch to Cloudflare "Full (strict)" mode later, install
+# a Cloudflare Origin Certificate as a TLS secret and add a `tls:` block.
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aigora
+  namespace: aigora
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: ai-gora.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: aigora-frontend
+                port:
+                  number: 3000
