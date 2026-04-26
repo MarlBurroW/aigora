@@ -140,6 +140,113 @@ export async function getRunsForCompare(
   return details.filter((d): d is RunDetails => d !== null);
 }
 
+/**
+ * The shape every home-page card needs, returned by ONE bulk SQL query
+ * (vs. the N+1 storm we had before — `listModelSummaries` + `getRunDetails`
+ * per model = ~3×N queries through a 10-connection pool).
+ */
+export type HomeModelEntry = {
+  summary: ModelSummary;
+  scores: AxisScore[];
+  /** Pre-aggregated answer counts, used by `qualityFromCounts` — saves
+   *  shipping all 117 per-question rows. */
+  distinctAnswers: number;
+  strongCount: number;
+  totalAnswered: number;
+};
+
+/**
+ * Single bulk query that returns everything the home grid needs:
+ * latest run per model, total runs, total tokens, scores keyed by axis,
+ * and the answer aggregates required by the quality detector.
+ */
+export async function listHomeModelEntries(): Promise<HomeModelEntry[]> {
+  const { rows } = await pool.query<{
+    provider: Provider;
+    model_id: string;
+    latest_run_id: number;
+    latest_started_at: Date;
+    total_runs: string;
+    total_tokens: string;
+    scores: Record<string, string> | null;
+    distinct_answers: string;
+    strong_count: string;
+    total_answered: string;
+  }>(`
+    WITH latest AS (
+      SELECT DISTINCT ON (provider, model_id)
+        id, provider, model_id, started_at, total_tokens
+      FROM runs
+      WHERE error IS NULL
+      ORDER BY provider, model_id, started_at DESC
+    ),
+    counts AS (
+      SELECT provider, model_id, COUNT(*) AS total_runs
+      FROM runs WHERE error IS NULL
+      GROUP BY provider, model_id
+    ),
+    score_agg AS (
+      SELECT s.run_id,
+             json_object_agg(s.axis, s.score::text) AS scores
+      FROM scores s
+      JOIN latest l ON l.id = s.run_id
+      GROUP BY s.run_id
+    ),
+    answer_agg AS (
+      SELECT a.run_id,
+             COUNT(DISTINCT a.response)
+               FILTER (WHERE a.response <> 'no_opinion') AS distinct_answers,
+             COUNT(*)
+               FILTER (WHERE a.response IN ('strongly_agree', 'strongly_disagree')) AS strong_count,
+             COUNT(*)
+               FILTER (WHERE a.response <> 'no_opinion') AS total_answered
+      FROM answers a
+      JOIN latest l ON l.id = a.run_id
+      GROUP BY a.run_id
+    )
+    SELECT
+      l.provider,
+      l.model_id,
+      l.id AS latest_run_id,
+      l.started_at AS latest_started_at,
+      c.total_runs,
+      l.total_tokens,
+      sa.scores,
+      COALESCE(an.distinct_answers, 0) AS distinct_answers,
+      COALESCE(an.strong_count, 0) AS strong_count,
+      COALESCE(an.total_answered, 0) AS total_answered
+    FROM latest l
+    JOIN counts c USING (provider, model_id)
+    LEFT JOIN score_agg sa ON sa.run_id = l.id
+    LEFT JOIN answer_agg an ON an.run_id = l.id
+    ORDER BY l.provider, l.model_id;
+  `);
+
+  return rows.map((r) => {
+    const scores: AxisScore[] = r.scores
+      ? Object.entries(r.scores).map(([axis, score]) => ({
+          axis,
+          score: Number(score),
+        }))
+      : [];
+    return {
+      summary: {
+        provider: r.provider,
+        modelId: r.model_id,
+        latestRunId: r.latest_run_id,
+        latestRunStartedAt: r.latest_started_at,
+        totalRuns: Number(r.total_runs),
+        totalTokens: Number(r.total_tokens),
+        hasError: false,
+      },
+      scores,
+      distinctAnswers: Number(r.distinct_answers),
+      strongCount: Number(r.strong_count),
+      totalAnswered: Number(r.total_answered),
+    };
+  });
+}
+
 /** Latest successful run + scores for every tested model. */
 export async function listLatestRunsWithScores(): Promise<RunDetails[]> {
   const summaries = await listModelSummaries();

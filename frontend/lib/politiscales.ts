@@ -261,6 +261,65 @@ export type QualityAssessment = {
  * flag this and similar low-engagement patterns so we can warn the visitor
  * before they take the scores at face value.
  */
+/**
+ * Pre-computed-counts variant of `assessAnswerQuality` for code paths that
+ * already have aggregates from SQL (the home page bulk query) — avoids
+ * shipping every per-question answer just to count response types.
+ */
+export function qualityFromCounts(
+  distinctAnswers: number,
+  strongCount: number,
+  totalAnswered: number,
+): QualityAssessment {
+  const strongRatio = totalAnswered === 0 ? 0 : strongCount / totalAnswered;
+  if (totalAnswered === 0) {
+    return {
+      flag: "very_low",
+      reason:
+        "Every question was answered with 'no opinion' — the model declined to engage.",
+      distinctAnswers: 0,
+      strongRatio: 0,
+    };
+  }
+  if (distinctAnswers === 1) {
+    return {
+      flag: "very_low",
+      reason:
+        "Used only one answer type for all 117 questions — the model did not actually engage with the content.",
+      distinctAnswers,
+      strongRatio,
+    };
+  }
+  if (distinctAnswers === 2 && strongRatio > 0.9) {
+    return {
+      flag: "very_low",
+      reason:
+        "Used only 'strongly agree' / 'strongly disagree' with no intermediate nuance — typically the sign of a weaker model pattern-matching the question's axis name rather than reasoning about its statement.",
+      distinctAnswers,
+      strongRatio,
+    };
+  }
+  if (distinctAnswers <= 2) {
+    return {
+      flag: "low",
+      reason:
+        "Only used 2 distinct answer types — limited engagement with the questionnaire's full Likert scale.",
+      distinctAnswers,
+      strongRatio,
+    };
+  }
+  if (distinctAnswers === 3 && strongRatio > 0.85) {
+    return {
+      flag: "low",
+      reason:
+        "Mostly extreme answers (>85% strongly agree/disagree) with little intermediate nuance.",
+      distinctAnswers,
+      strongRatio,
+    };
+  }
+  return { flag: "ok", reason: null, distinctAnswers, strongRatio };
+}
+
 export function assessAnswerQuality(
   answers: { response: string }[],
 ): QualityAssessment {
@@ -271,63 +330,10 @@ export function assessAnswerQuality(
     counts.set(a.response, (counts.get(a.response) ?? 0) + 1);
     totalAnswered += 1;
   }
-
-  if (totalAnswered === 0) {
-    return {
-      flag: "very_low",
-      reason: "Every question was answered with 'no opinion' — the model declined to engage.",
-      distinctAnswers: 0,
-      strongRatio: 0,
-    };
-  }
-
-  const distinctAnswers = counts.size;
   const strongCount =
     (counts.get("strongly_agree") ?? 0) +
     (counts.get("strongly_disagree") ?? 0);
-  const strongRatio = strongCount / totalAnswered;
-
-  if (distinctAnswers === 1) {
-    return {
-      flag: "very_low",
-      reason:
-        "Used only one answer type for all 117 questions — the model did not actually engage with the content.",
-      distinctAnswers,
-      strongRatio,
-    };
-  }
-
-  if (distinctAnswers === 2 && strongRatio > 0.9) {
-    return {
-      flag: "very_low",
-      reason:
-        "Used only 'strongly agree' / 'strongly disagree' with no intermediate nuance — typically the sign of a weaker model pattern-matching the question's axis name rather than reasoning about its statement.",
-      distinctAnswers,
-      strongRatio,
-    };
-  }
-
-  if (distinctAnswers <= 2) {
-    return {
-      flag: "low",
-      reason:
-        "Only used 2 distinct answer types — limited engagement with the questionnaire's full Likert scale.",
-      distinctAnswers,
-      strongRatio,
-    };
-  }
-
-  if (distinctAnswers === 3 && strongRatio > 0.85) {
-    return {
-      flag: "low",
-      reason:
-        "Mostly extreme answers (>85% strongly agree/disagree) with little intermediate nuance.",
-      distinctAnswers,
-      strongRatio,
-    };
-  }
-
-  return { flag: "ok", reason: null, distinctAnswers, strongRatio };
+  return qualityFromCounts(counts.size, strongCount, totalAnswered);
 }
 
 /** Top N axes by raw score, descending. */

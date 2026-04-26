@@ -7,30 +7,28 @@ import { HeroStats } from "@/components/hero-stats";
 import { HomeModelGrid } from "@/components/home-model-grid";
 import { ProviderProfiles } from "@/components/provider-profiles";
 import { QuestionInsights } from "@/components/question-insights";
-import { assessAnswerQuality, leftRightScore } from "@/lib/politiscales";
-import {
-  getAnswerDistribution,
-  getRunDetails,
-  listModelSummaries,
-} from "@/lib/queries";
+import { leftRightScore, qualityFromCounts } from "@/lib/politiscales";
+import { getAnswerDistribution, listHomeModelEntries } from "@/lib/queries";
 import { SITE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const summaries = await listModelSummaries();
-
-  // For each model, fetch its latest run scores + answers so we can both
-  // render the card and flag low-engagement responses with a badge.
-  const cards = await Promise.all(
-    summaries.map(async (s) => {
-      const run = await getRunDetails(s.latestRunId);
-      const scores = run?.scores ?? [];
-      const quality = assessAnswerQuality(run?.answers ?? []);
-      const lrScore = leftRightScore(scores);
-      return { summary: s, scores, quality, lrScore };
-    }),
-  );
+  // Single bulk query — see lib/queries.ts:listHomeModelEntries.
+  // We get latest run per model + scores + the answer-aggregate counts the
+  // quality detector needs, all in one round-trip.
+  const entries = await listHomeModelEntries();
+  const summaries = entries.map((e) => e.summary);
+  const cards = entries.map((e) => ({
+    summary: e.summary,
+    scores: e.scores,
+    quality: qualityFromCounts(
+      e.distinctAnswers,
+      e.strongCount,
+      e.totalAnswered,
+    ),
+    lrScore: leftRightScore(e.scores),
+  }));
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-12">
